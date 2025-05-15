@@ -40,12 +40,13 @@ LOG_LEVEL=INFO
 
 5. Start the PostgreSQL database using Docker:
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 6. Initialize the database:
 ```bash
-alembic upgrade head
+PYTHONPATH=. alembic revision --autogenerate -m "Initial migration"
+PYTHONPATH=. alembic upgrade head
 ```
 
 7. Run the development server:
@@ -83,12 +84,12 @@ qai-backend-py/
 
 1. Create a new migration:
 ```bash
-alembic revision --autogenerate -m "description"
+PYTHONPATH=. alembic revision --autogenerate -m "description"
 ```
 
 2. Apply migrations:
 ```bash
-alembic upgrade head
+PYTHONPATH=. alembic upgrade head
 ```
 
 3. Run tests:
