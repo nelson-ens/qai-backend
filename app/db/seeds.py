@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 from app.crud import crud_user
 from app.schemas.user import UserCreate
 from app.core.security import get_password_hash
-from app.models.user_role import UserRole
+from app.models import UserRole
 
 def seed_roles(db: Session) -> None:
     """Seed the user_roles table with initial data."""

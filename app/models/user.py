@@ -1,7 +1,7 @@
 from sqlalchemy import Boolean, Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
-from app.db.base import Base
+from app.db.base_class import Base
 
 class User(Base):
     __tablename__ = "users"
@@ -17,5 +17,5 @@ class User(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
 
-    # Relationship with UserRole
-    role = relationship("UserRole", backref="users") 
+    # Relationship with UserRole using string reference
+    role = relationship("app.models.user_role.UserRole", back_populates="users", lazy="joined") 

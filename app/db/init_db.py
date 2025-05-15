@@ -9,10 +9,7 @@ from app.db.seeds import init_db
 
 def main() -> None:
     db = SessionLocal()
-    try:
-        init_db(db)
-    finally:
-        db.close()
+    init_db(db)
 
 if __name__ == "__main__":
     print("Creating initial data...")
