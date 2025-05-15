@@ -45,11 +45,20 @@ docker compose up -d
 
 6. Initialize the database:
 ```bash
-PYTHONPATH=. alembic revision --autogenerate -m "Initial migration"
-PYTHONPATH=. alembic upgrade head
+alembic upgrade head
 ```
 
-7. Run the development server:
+7. Seed the database with initial data:
+```bash
+python -m app.db.init_db
+```
+
+This will create the following test users:
+- Email: admin@qai.com, Password: admin123
+- Email: user@qai.com, Password: user123
+- Email: test@qai.com, Password: test123
+
+8. Run the development server:
 ```bash
 uvicorn app.main:app --reload
 ```
@@ -71,6 +80,8 @@ qai-backend-py/
 │   ├── core/            # Core functionality
 │   ├── crud/            # Database operations
 │   ├── db/              # Database configuration
+│   │   ├── seeds.py     # Database seed data
+│   │   └── init_db.py   # Database initialization script
 │   ├── models/          # SQLAlchemy models
 │   └── schemas/         # Pydantic schemas
 ├── tests/               # Test files
@@ -84,18 +95,41 @@ qai-backend-py/
 
 1. Create a new migration:
 ```bash
-PYTHONPATH=. alembic revision --autogenerate -m "description"
+alembic revision --autogenerate -m "description"
 ```
 
 2. Apply migrations:
 ```bash
-PYTHONPATH=. alembic upgrade head
+alembic upgrade head
 ```
 
 3. Run tests:
 ```bash
 pytest
 ```
+
+## Database Seeding
+
+To seed the database with initial data:
+
+1. Make sure your database is running and migrations are applied:
+```bash
+docker compose up -d
+alembic upgrade head
+```
+
+2. Run the seed script:
+```bash
+python3 -m app.db.init_db
+```
+
+## Remove docker volume to reset database
+
+```bash
+docker compose down -v
+```
+
+To modify the seed data, edit the `app/db/seeds.py` file.
 
 ## Production Deployment
 
